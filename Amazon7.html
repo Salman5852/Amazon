@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cars Deals - Auto Haven</title>
+  <style>
+    /* Reusing your animations and styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes fadeInEase {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-15px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-7px);
+      }
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(45deg, #ff5722, #ff9800);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #000;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+    }
+
+    /* Navigation */
+    nav {
+      background: #333;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: #575757;
+    }
+
+    /* Hero Carousel Section */
+    .hero-carousel {
+      position: relative;
+      height: 60vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: slideIn 2s ease-out forwards;
+    }
+
+    /* Each Carousel Slide */
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay Content */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 25px;
+      border-radius: 10px;
+    }
+
+    .overlay h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .overlay p {
+      font-size: 1.5em;
+    }
+
+    /* Carousel Navigation Arrows */
+    .carousel-nav span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 10;
+    }
+
+    /* Cars Grid */
+    .cars {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+
+    .car-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .car-card:hover {
+      transform: scale(1.05);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .car-card h3 {
+      margin: 10px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .car-card p.price {
+      margin: 10px;
+      font-size: 1em;
+      color: #ff5722;
+      font-weight: bold;
+    }
+
+    .car-card p.note {
+      font-size: 0.9em;
+      color: #555;
+      margin: 5px 10px;
+    }
+
+    .car-card button {
+      margin: 10px;
+      padding: 10px;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .car-card button:hover {
+      background: #0056b3;
+    }
+
+    /* Extra Section Styling */
+    .extra-section {
+      padding: 60px 20px;
+      background: #f5f5f5;
+      text-align: center;
+      border-top: 2px solid #ddd;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+
+    .extra-section h2 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .extra-section p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: auto;
+      color: #444;
+    }
+
+    .extra-section ul {
+      list-style: none;
+      padding: 20px 0;
+    }
+
+    .extra-section ul li {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 8px;
+      padding-left: 15px;
+      position: relative;
+    }
+
+    .extra-section ul li::before {
+      content: "🚗";
+      position: absolute;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Luxury Car Deals</header>
+
+  <nav>
+    <ul>
+      <li><a href="Amazon.html">Home</a></li>
+      <li><a href="Amazon2.html">Gaming</a></li>
+      <li><a href="Amazon3.html">Tech & Gadgets</a></li>
+      <li><a href="Amazon4.html">Fashion</a></li>
+      <li><a href="Amazon5.html">Home Appliances</a></li>
+      <li><a href="Amazon6.html">Books</a></li>
+      <li><a href="Amazon7.html">Cars</a></li>
+      <li><a href="Cart.html">Cart</a></li>
+      <li><a href="Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Carousel Section -->
+  <div class="hero-carousel" id="hero-carousel">
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <img src="car1.png" alt="Slide 1: Performance & Elegance">
+      <div class="overlay">
+        <h2>Unmatched Performance & Elegance</h2>
+        <p>Discover the finest cars from the world's top brands.</p>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="car2.png" alt="Slide 2: Luxury & Innovation">
+      <div class="overlay">
+        <h2>Luxury & Innovation</h2>
+        <p>Experience the pinnacle of automotive engineering.</p>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="car3.png" alt="Slide 3: Drive Your Dream">
+      <div class="overlay">
+        <h2>Drive Your Dream</h2>
+        <p>Find your perfect car to match your style.</p>
+      </div>
+    </div>
+    <!-- Carousel Navigation Arrows -->
+    <div class="carousel-nav">
+      <span class="prev" onclick="prevSlide()">&#10094;</span>
+      <span class="next" onclick="nextSlide()">&#10095;</span>
+    </div>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" onclick="scrollDown()">&#x2193;</div>
+  </div>
+
+  <!-- Cars Grid -->
+  <div class="cars">
+    <!-- Bugatti Chiron -->
+    <div class="car-card">
+      <img src="bugati.jpg" alt="Bugatti Chiron">
+      <h3>Bugatti Chiron</h3>
+      <p class="price">$3,000,000</p>
+      <p class="note">Unparalleled speed with a <strong>quad-turbocharged W16 engine</strong>.</p>
+      <button onclick="viewDetails('Bugatti Chiron', '$3,000,000')">View Details</button>
+    </div>
+    <!-- Ferrari SF90 Stradale -->
+    <div class="car-card">
+      <img src="ferrari_sf90_stradale_5_0.jpg" alt="Ferrari SF90 Stradale">
+      <h3>Ferrari SF90 Stradale</h3>
+      <p class="price">$524,000</p>
+      <p class="note">Hybrid supercar delivering <strong>986 horsepower</strong>.</p>
+      <button onclick="viewDetails('Ferrari SF90 Stradale', '$524,000')">View Details</button>
+    </div>
+    <!-- Rolls-Royce Phantom -->
+    <div class="car-card">
+      <img src="rolls.jfif" alt="Rolls-Royce Phantom">
+      <h3>Rolls-Royce Phantom</h3>
+      <p class="price">$550,000</p>
+      <p class="note">Ultimate luxury with a <strong>handcrafted bespoke interior</strong>.</p>
+      <button onclick="viewDetails('Rolls-Royce Phantom', '$550,000')">View Details</button>
+    </div>
+    <!-- Nissan Patrol 2025 -->
+    <div class="car-card">
+      <img src="2025-nissan-patrol-y63-gets-twin-turbo-v6-allegedly-much-better-than-land-cruiser-300-223525-7.jpg" alt="Nissan Patrol 2025">
+      <h3>Nissan Patrol 2025</h3>
+      <p class="price">$78,000</p>
+      <p class="note">Dominates off-road with <strong>V8 power and adaptive suspension</strong>.</p>
+      <button onclick="viewDetails('Nissan Patrol 2025', '$78,000')">View Details</button>
+    </div>
+    <!-- Lamborghini Aventador SVJ -->
+    <div class="car-card">
+      <img src="Lamborghini-Aventador-SVJ-1a.jpg" alt="Lamborghini Aventador SVJ">
+      <h3>Lamborghini Aventador SVJ</h3>
+      <p class="price">$517,000</p>
+      <p class="note">A wild <strong>V12 beast</strong> with a top speed of <strong>217 mph</strong>.</p>
+      <button onclick="viewDetails('Lamborghini Aventador SVJ', '$517,000')">View Details</button>
+    </div>
+  </div>
+
+  <!-- Extra Section: Car Buying Tips -->
+  <div class="extra-section">
+    <h2>Car Buying Tips</h2>
+    <p>Get the inside scoop on what to look for when purchasing luxury vehicles. Our experts share tips to ensure you're making the best investment.</p>
+    <ul>
+      <li>Check the vehicle history and maintenance records</li>
+      <li>Consider the total cost of ownership</li>
+      <li>Test drive for performance and comfort</li>
+      <li>Negotiate for the best deal possible</li>
+    </ul>
+  </div>
+
+  <script>
+    // Smooth scroll for the scroll indicator
+    function scrollDown() {
+      document.querySelector('.cars').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Function to show car details (demo)
+    function viewDetails(car, price) {
+      // Here you might redirect to a details page instead of using alert.
+      alert("Viewing details for " + car + " priced at " + price);
+    }
+
+    // Carousel functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Auto slide every 5 seconds.
+    setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+
+</html>

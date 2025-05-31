@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gaming Deals - Amazon</title>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+      background: #f4f4f4;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(45deg, #ff9800, #f44336);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #000;
+      opacity: 0;
+      animation: fadeInEase 2s forwards;
+    }
+
+    @keyframes fadeInEase {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    nav {
+      background: #333;
+      overflow: hidden;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background: #575757;
+    }
+
+    /* Gaming Hero Carousel Section */
+    .gaming-hero-carousel {
+      position: relative;
+      height: 50vh;
+      overflow: hidden;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      text-shadow: 2px 2px #000;
+    }
+
+    .overlay h2 {
+      font-size: 3em;
+    }
+
+    /* Carousel Navigation Arrows */
+    .carousel-nav span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Products Grid Section */
+    .products {
+      padding: 30px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      margin: 10px;
+      color: #333;
+      font-size: 1.2em;
+    }
+
+    .product-card p.price {
+      margin: 0 10px;
+      font-size: 1em;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .product-card button {
+      margin: 10px;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .product-card button:hover {
+      background: #45a049;
+    }
+
+    /* Extra Sections */
+    .extra-section {
+      padding: 60px 20px;
+      background: #fff;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-top: 40px;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .extra-section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #333;
+    }
+
+    .extra-section p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Footer Styles */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>Gaming Deals</header>
+
+  <nav>
+    <ul>
+      <li><a href="Amazon.html">Home</a></li>
+      <li><a href="Amazon2.html">Gaming</a></li>
+      <li><a href="Amazon3.html">Tech & Gadgets</a></li>
+      <li><a href="Amazon4.html">Fashion</a></li>
+      <li><a href="Amazon5.html">Home Appliances</a></li>
+      <li><a href="Amazon6.html">Books</a></li>
+      <li><a href="Amazon7.html">Cars</a></li>
+      <li><a href="Cart.html">Cart</a></li>
+      <li><a href="Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Gaming Hero Carousel Section -->
+  <div class="gaming-hero-carousel" id="gaming-hero">
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <img src="aa.jfif" alt="Gaming Slide 1">
+      <div class="overlay">
+        <h2>Level Up Your Gaming!</h2>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="gam1.png" alt="Gaming Slide 2">
+      <div class="overlay">
+        <h2>Exclusive Deals on Gaming Gear</h2>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="gam2.png" alt="Gaming Slide 3">
+      <div class="overlay">
+        <h2>Game On Like a Pro!</h2>
+      </div>
+    </div>
+    <!-- Navigation Arrows -->
+    <div class="carousel-nav">
+      <span class="prev" onclick="prevSlide()">&#10094;</span>
+      <span class="next" onclick="nextSlide()">&#10095;</span>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <div class="products">
+    <div class="product-card">
+      <img src="ps5.jpg" alt="PlayStation 5">
+      <h3>PlayStation 5</h3>
+      <p class="price">$499</p>
+      <button onclick="addToCart('PlayStation 5', 499)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="xbox.jfif" alt="Xbox Series X">
+      <h3>Xbox Series X</h3>
+      <p class="price">$499</p>
+      <button onclick="addToCart('Xbox Series X', 499)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="chair.jfif" alt="Gaming Chair">
+      <h3>Gaming Chair</h3>
+      <p class="price">$199</p>
+      <button onclick="addToCart('Gaming Chair', 199)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="key.jfif" alt="Mechanical Keyboard">
+      <h3>Mechanical Keyboard</h3>
+      <p class="price">$89</p>
+      <button onclick="addToCart('Mechanical Keyboard', 89)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="mouse.jfif" alt="Gaming Mouse">
+      <h3>Gaming Mouse</h3>
+      <p class="price">$49</p>
+      <button onclick="addToCart('Gaming Mouse', 49)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="vr.jfif" alt="VR Headset">
+      <h3>VR Headset</h3>
+      <p class="price">$299</p>
+      <button onclick="addToCart('VR Headset', 299)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="monitor.jfif" alt="Gaming Monitor">
+      <h3>Gaming Monitor</h3>
+      <p class="price">$349</p>
+      <button onclick="addToCart('Gaming Monitor', 349)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="pad.jfif" alt="Wireless Gamepad">
+      <h3>Wireless Gamepad</h3>
+      <p class="price">$39</p>
+      <button onclick="addToCart('Wireless Gamepad', 39)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="headset.jfif" alt="Gaming Headset">
+      <h3>Gaming Headset</h3>
+      <p class="price">$59</p>
+      <button onclick="addToCart('Gaming Headset', 59)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="contr.jfif" alt="Wireless Controller">
+      <h3>Wireless Controller</h3>
+      <p class="price">$49</p>
+      <button onclick="addToCart('Wireless Controller', 49)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Extra Section: Featured Gaming Accessories -->
+  <div class="extra-section">
+    <h2>Featured Gaming Accessories</h2>
+    <p>Discover innovative accessories and gear designed to give you a competitive edge. From precision controllers to immersive VR add‑ons, our collection will help you dominate the game.</p>
+  </div>
+
+  <!-- Extra Section: Latest Gaming News -->
+  <div class="extra-section">
+    <h2>Latest Gaming News</h2>
+    <p>Stay updated on the newest game releases, updates, and exclusive promotions that are setting the gaming world on fire. Level up your setup with the latest trends!</p>
+  </div>
+
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+
+    function addToCart(product, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ product, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product + ' added to cart!');
+    }
+  </script>
+
+
+
+</body>
+
+</html>

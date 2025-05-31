@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Books Deals - Amazon</title>
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeInEase {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-15px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-7px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Header with Fade In & Ease Out */
+    header {
+      background: linear-gradient(45deg, #673ab7, #3f51b5);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #000;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+    }
+
+    /* Navigation with Delayed Fade In */
+    nav {
+      background: #333;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background: #575757;
+    }
+
+    /* Hero Carousel Section */
+    .hero-carousel {
+      position: relative;
+      height: 60vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: slideIn 2s ease-out forwards;
+    }
+
+    /* Each Slide */
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay Content */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 25px;
+      border-radius: 10px;
+    }
+
+    .overlay h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .overlay p {
+      font-size: 1.5em;
+    }
+
+    /* Carousel Navigation Arrows */
+    .carousel-nav span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 10;
+    }
+
+    /* Products Grid with Fade In */
+    .products {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      margin: 10px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .product-card p.price {
+      margin: 0 10px;
+      font-size: 1em;
+      color: #ff5722;
+      font-weight: bold;
+    }
+
+    .product-card button {
+      margin: 10px;
+      padding: 10px;
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .product-card button:hover {
+      background: #45a049;
+    }
+
+    /* Extra Content Sections */
+    .extra-section {
+      padding: 60px 20px;
+      background: #fff;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+
+    .extra-section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #333;
+    }
+
+    .extra-section p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.8s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>Books Deals</header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="Amazon.html">Home</a></li>
+      <li><a href="Amazon2.html">Gaming</a></li>
+      <li><a href="Amazon3.html">Tech & Gadgets</a></li>
+      <li><a href="Amazon4.html">Fashion</a></li>
+      <li><a href="Amazon5.html">Home Appliances</a></li>
+      <li><a href="Amazon6.html">Books</a></li>
+      <li><a href="Amazon7.html">Cars</a></li>
+      <li><a href="Cart.html">Cart</a></li>
+      <li><a href="Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Carousel Section -->
+  <div class="hero-carousel" id="hero-carousel">
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <img src="boko.jpg" alt="Books Slide 1" />
+      <div class="overlay">
+        <h2>Welcome to Book Haven</h2>
+        <p>Discover your next favorite read from our extensive collection.</p>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="generate an image that has books in it (1).png" alt="Books Slide 2" />
+      <div class="overlay">
+        <h2>Explore Bestsellers</h2>
+        <p>Dive into stories that have captured readers worldwide.</p>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="sdfsdfsdfjkgjf.png" alt="Books Slide 3" />
+      <div class="overlay">
+        <h2>Timeless Classics</h2>
+        <p>Rediscover legendary works that have shaped literature.</p>
+      </div>
+    </div>
+
+    <!-- Carousel Navigation Arrows -->
+    <div class="carousel-nav">
+      <span class="prev" onclick="prevSlide()">&#10094;</span>
+      <span class="next" onclick="nextSlide()">&#10095;</span>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" onclick="scrollDown()">&#x2193;</div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products">
+    <div class="product-card">
+      <img src="book1.jfif" alt="Bestselling Novel">
+      <h3>Bestselling Novel</h3>
+      <p class="price">$19</p>
+      <button onclick="addToCart('Bestselling Novel', 19)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="book2.jfif" alt="Gourmet Cookbook">
+      <h3>Gourmet Cookbook</h3>
+      <p class="price">$29</p>
+      <button onclick="addToCart('Gourmet Cookbook', 29)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="book3.jfif" alt="Inspiring Biography">
+      <h3>Inspiring Biography</h3>
+      <p class="price">$24</p>
+      <button onclick="addToCart('Inspiring Biography', 24)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="book4.jfif" alt="Science Fiction Epic">
+      <h3>Science Fiction Epic</h3>
+      <p class="price">$21</p>
+      <button onclick="addToCart('Science Fiction Epic', 21)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="book5.jfif" alt="Self-Help Guide">
+      <h3>Self-Help Guide</h3>
+      <p class="price">$15</p>
+      <button onclick="addToCart('Self-Help Guide', 15)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Extra Section: Latest Releases -->
+  <div class="extra-section">
+    <h2>Latest Releases</h2>
+    <p>Stay updated with the newest books hitting the shelves. Our selection is updated weekly with fresh titles you'll love.</p>
+  </div>
+
+  <!-- Extra Section: Top Sellers -->
+  <div class="extra-section">
+    <h2>Top Sellers</h2>
+    <p>Join thousands of readers exploring our top selling books. Find out what everyone is talking about and dive into a great story.</p>
+  </div>
+
+  <script>
+    function scrollDown() {
+      document.querySelector('.products').scrollIntoView({ behavior: 'smooth' });
+    }
+    function addToCart(product, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ product, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product + " added to cart!");
+    }
+
+    // Carousel functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
+
+  <footer>
+    &copy; 2025 Books Deals - Amazon
+  </footer>
+</body>
+
+</html>

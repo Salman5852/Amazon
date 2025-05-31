@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fashion Deals - Amazon</title>
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #fbf8f3;
+      overflow-x: hidden;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeInEase {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      40% {
+        transform: translateX(-50%) translateY(-15px);
+      }
+
+      60% {
+        transform: translateX(-50%) translateY(-7px);
+      }
+    }
+
+    /* Header with Fade-In & Ease-Out */
+    header {
+      background: linear-gradient(45deg, #e91e63, #9c27b0);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #000;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+    }
+
+    /* Navigation */
+    nav {
+      background: #333;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background: #575757;
+    }
+
+    /* Hero Carousel Section */
+    .hero-carousel {
+      position: relative;
+      height: 60vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: slideIn 2s ease-out forwards;
+    }
+
+    /* Each slide is absolutely positioned, with a fade transition */
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    /* Ensure images cover the whole slide */
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay text on each slide */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 25px;
+      border-radius: 10px;
+    }
+
+    .overlay h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    .overlay p {
+      font-size: 1.5em;
+    }
+
+    /* Carousel Navigation Arrows */
+    .carousel-nav span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 10;
+    }
+
+    /* Products Grid with Fade-In */
+    .products {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      margin: 10px;
+      color: #333;
+      font-size: 1.2em;
+    }
+
+    .product-card p.price {
+      margin: 0 10px;
+      font-size: 1em;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .product-card button {
+      margin: 10px;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .product-card button:hover {
+      background: #45a049;
+    }
+
+    /* Extra Content Sections to Extend Page Height */
+    .extra-section {
+      padding: 60px 20px;
+      background: #fff;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+
+    .extra-section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #333;
+    }
+
+    .extra-section p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Footer with Fade-In */
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.8s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>Fashion Deals</header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="Amazon.html">Home</a></li>
+      <li><a href="Amazon2.html">Gaming</a></li>
+      <li><a href="Amazon3.html">Tech & Gadgets</a></li>
+      <li><a href="Amazon4.html">Fashion</a></li>
+      <li><a href="Amazon5.html">Home Appliances</a></li>
+      <li><a href="Amazon6.html">Books</a></li>
+      <li><a href="Amazon7.html">Cars</a></li>
+      <li><a href="Cart.html">Cart</a></li>
+      <li><a href="Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Carousel Section -->
+  <div class="hero-carousel" id="hero-carousel">
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <img src="adfsdfsdfsdfsdfdsfsd.jpg" alt="Fashion Slide 1" />
+      <div class="overlay">
+        <h2>Step into Style</h2>
+        <p>Explore the latest trends and elevate your wardrobe.</p>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="generate 3 wide images for men fashion carousel html.png" alt="Fashion Slide 2" />
+      <div class="overlay">
+        <h2>Effortless Elegance</h2>
+        <p>Find your signature look with our curated collection.</p>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="generate a wide image for men fashion carousel different from previous ones.png" alt="Fashion Slide 3" />
+      <div class="overlay">
+        <h2>Modern Chic</h2>
+        <p>Unleash your inner fashionista.</p>
+      </div>
+    </div>
+
+    <!-- Carousel Navigation Arrows -->
+    <div class="carousel-nav">
+      <span class="prev" onclick="prevSlide()">&#10094;</span>
+      <span class="next" onclick="nextSlide()">&#10095;</span>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" onclick="scrollDown()">&#x2193;</div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products">
+    <div class="product-card">
+      <img src="sneakers.jfif" alt="Stylish Sneakers" />
+      <h3>Stylish Sneakers</h3>
+      <p class="price">$89</p>
+      <button onclick="addToCart('Stylish Sneakers', 89)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="watch22.jfif" alt="Luxury Wristwatch" />
+      <h3>Luxury Wristwatch</h3>
+      <p class="price">$299</p>
+      <button onclick="addToCart('Luxury Wristwatch', 299)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="sunglasses.jfif" alt="Trendy Sunglasses" />
+      <h3>Trendy Sunglasses</h3>
+      <p class="price">$49</p>
+      <button onclick="addToCart('Trendy Sunglasses', 49)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="jacket.jfif" alt="Stylish Jacket" />
+      <h3>Stylish Jacket</h3>
+      <p class="price">$159</p>
+      <button onclick="addToCart('Stylish Jacket', 159)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="jeans.jfif" alt="Designer Jeans" />
+      <h3>Designer Jeans</h3>
+      <p class="price">$99</p>
+      <button onclick="addToCart('Designer Jeans', 99)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="hat.jfif" alt="Casual Hat" />
+      <h3>Casual Hat</h3>
+      <p class="price">$25</p>
+      <button onclick="addToCart('Casual Hat', 25)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="wallet.jfif" alt="Premium Wallet" />
+      <h3>Premium Wallet</h3>
+      <p class="price">$75</p>
+      <button onclick="addToCart('Premium Wallet', 75)">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="boot.jfif" alt="Leather Boots" />
+      <h3>Leather Boots</h3>
+      <p class="price">$150</p>
+      <button onclick="addToCart('Leather Boots', 150)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Extra Section: Featured Fashion Trends -->
+  <div class="extra-section">
+    <h2>Featured Fashion Trends</h2>
+    <p>
+      Stay on top of the season's best looks and redefine your style with our curated collection of must-have fashion
+      trends.
+    </p>
+  </div>
+
+  <!-- Extra Section: Latest Style Tips -->
+  <div class="extra-section">
+    <h2>Latest Style Tips</h2>
+    <p>
+      Check out our latest fashion tips and style guides that help you create amazing looks with ease and confidence. 
+    </p>
+  </div>
+
+  <script>
+    // Smooth scroll function for the scroll indicator
+    function scrollDown() {
+      document.querySelector(".products").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Basic Add-to-Cart functionality using localStorage
+    function addToCart(product, price) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ product, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(product + " added to cart!");
+    }
+
+    // Carousel functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".carousel-slide");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) {
+          slide.classList.add("active");
+        }
+      });
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+
+</html>

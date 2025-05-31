@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Super Sale</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      overflow-x: hidden;
+    }
+    /* Keyframe Animations */
+    @keyframes fadeInEase {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-15px); }
+      60% { transform: translateX(-50%) translateY(-7px); }
+    }
+    /* Header */
+    header {
+      background: linear-gradient(45deg, #ff9800, #f44336);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #000;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+    }
+    /* Navigation */
+    nav {
+      background: #333;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 10px;
+    }
+    nav ul li a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s;
+    }
+    nav ul li a:hover {
+      background: #575757;
+    }
+    /* HERO CAROUSEL */
+    .hero-carousel {
+      position: relative;
+      height: 70vh;
+      overflow: hidden;
+    }
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 1s ease-in-out;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      /* You can animate the text as needed */
+    }
+    .overlay h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #000;
+    }
+    .overlay p {
+      font-size: 1.5em;
+      background: rgba(0,0,0,0.5);
+      padding: 15px 25px;
+      border-radius: 10px;
+    }
+    /* Carousel Navigation Arrows */
+    .carousel-nav span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: white;
+      background: rgba(0,0,0,0.4);
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      user-select: none;
+      z-index: 10;
+    }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+    
+    /* Scroll Indicator (Optional) */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      z-index: 10;
+    }
+
+    /* Categories Section */
+    .categories {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+    .category-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .category-card:hover { transform: scale(1.05); }
+    .category-card img { width: 100%; display: block; }
+    .category-card h3 {
+      padding: 15px;
+      color: #333;
+      text-align: center;
+      font-size: 1.5em;
+      background: #f4f4f4;
+      margin: 0;
+    }
+
+    /* Extra Content Sections */
+    .extra-section {
+      padding: 60px 20px;
+      background: white;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.5s;
+    }
+    .extra-section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #333;
+    }
+    .extra-section p {
+      font-size: 1.2em;
+      line-height: 1.6em;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    /* Footer */
+    footer {
+      background: #333;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInEase 1.5s ease-out forwards;
+      animation-delay: 1.8s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>Amazon Super Sale</header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="Amazon.html">Home</a></li>
+      <li><a href="Amazon2.html">Gaming</a></li>
+      <li><a href="Amazon3.html">Tech & Gadgets</a></li>
+      <li><a href="Amazon4.html">Fashion</a></li>
+      <li><a href="Amazon5.html">Home Appliances</a></li>
+      <li><a href="Amazon6.html">Books</a></li>
+      <li><a href="Amazon7.html">Cars</a></li>
+      <li><a href="Cart.html">Cart</a></li>
+      <li><a href="Contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Carousel Section -->
+  <div class="hero-carousel" id="hero">
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <img src="sale1.png" alt="Slide 1">
+      <div class="overlay">
+        <h2>Welcome to Amazon Super Sale</h2>
+        <p>Discover unbeatable deals across all categories!</p>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="sale2.png" alt="Slide 2">
+      <div class="overlay">
+        <h2>Latest Arrivals</h2>
+        <p>Explore our exclusive new products.</p>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="sale3.png" alt="Slide 3">
+      <div class="overlay">
+        <h2>Customer Favorites</h2>
+        <p>Shop the products everyone loves!</p>
+      </div>
+    </div>
+    <!-- Navigation Arrows -->
+    <div class="carousel-nav">
+      <span class="prev" onclick="prevSlide()">&#10094;</span>
+      <span class="next" onclick="nextSlide()">&#10095;</span>
+    </div>
+    <!-- Optional Scroll Indicator -->
+    <div class="scroll-indicator" onclick="scrollDown()">&#x2193;</div>
+  </div>
+
+  <!-- Categories Section -->
+  <div class="categories">
+    <div class="category-card" onclick="window.location.href='Amazon2.html'">
+      <img src="gaming.jfif" alt="Gaming">
+      <h3>Gaming</h3>
+    </div>
+    <div class="category-card" onclick="window.location.href='Amazon3.html'">
+      <img src="gadget.jfif" alt="Tech & Gadgets">
+      <h3>Tech & Gadgets</h3>
+    </div>
+    <div class="category-card" onclick="window.location.href='Amazon4.html'">
+      <img src="fashion.jfif" alt="Fashion">
+      <h3>Fashion</h3>
+    </div>
+    <div class="category-card" onclick="window.location.href='Amazon5.html'">
+      <img src="home.jfif" alt="Home Appliances">
+      <h3>Home Appliances</h3>
+    </div>
+    <div class="category-card" onclick="window.location.href='Amazon6.html'">
+      <img src="book.jfif" alt="Books">
+      <h3>Books</h3>
+    </div>
+  </div>
+
+  <!-- Extra Content Sections -->
+  <div class="extra-section" id="offer-section">
+    <h2>Featured Offers</h2>
+    <p>Explore our exclusive deals and limited time offers. We have a range of exciting products available at unbelievable prices. Shop now and get the best deals on electronics, fashion, home appliances, and more!</p>
+  </div>
+  <div class="extra-section">
+    <h2>Latest Arrivals</h2>
+    <p>Stay ahead of the trends by checking out our latest arrivals. From cutting-edge gadgets to stylish apparel, always be the first to know about new products and emerging brands exclusively available at Amazon Super Sale.</p>
+  </div>
+  <div class="extra-section">
+    <h2>Customer Favorites</h2>
+    <p>Join thousands of satisfied customers and see why our deals are a hit! Our customer favorites section is filled with top-rated products from various categories that you won't want to miss.</p>
+  </div>
+
+  <!-- JavaScript for Carousel -->
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
+        }
+      });
+    }
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+    // Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
+
+  <!-- Existing Scroll Functionality -->
+  <script>
+    function scrollDown() {
+      document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
